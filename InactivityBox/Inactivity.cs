@@ -14,13 +14,13 @@ namespace InactivityBox
         static extern bool GetLastInputInfo(ref LASTINPUTINFO plii);
 
         /// <summary>
-        /// Gets time in ms since last input
+        /// Gets time in since last user input
         /// </summary>
         /// <returns></returns>
-        public static uint GetLastInputTime()
+        public static TimeSpan Duration()
         {
             uint idleTime = 0;
-            LASTINPUTINFO lastInputInfo = new LASTINPUTINFO();
+            var lastInputInfo = new LASTINPUTINFO();
             lastInputInfo.cbSize = (uint) Marshal.SizeOf(lastInputInfo);
             lastInputInfo.dwTime = 0;
 
@@ -33,7 +33,7 @@ namespace InactivityBox
                 idleTime = envTicks - lastInputTick;
             }
 
-            return idleTime;
+            return TimeSpan.FromMilliseconds(idleTime);
         }
     }
     [StructLayout(LayoutKind.Sequential)]

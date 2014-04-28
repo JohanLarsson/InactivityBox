@@ -13,7 +13,7 @@
         private TimeSpan _idleTime;
         public Vm()
         {
-            _timer = new Timer(Update, null, TimeSpan.Zero, TimeSpan.FromMilliseconds(100));
+            _timer = new Timer(Update, null, TimeSpan.Zero, TimeSpan.FromSeconds(0.1));
         }
         public event PropertyChangedEventHandler PropertyChanged;
 
@@ -42,8 +42,7 @@
         }
         private void Update(object o)
         {
-            uint lastInputTime = Inactivity.GetLastInputTime();
-            IdleTime = TimeSpan.FromMilliseconds(lastInputTime);
+            IdleTime = Inactivity.Duration();
         }
     }
 }
